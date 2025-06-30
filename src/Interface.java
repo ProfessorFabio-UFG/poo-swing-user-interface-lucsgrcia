@@ -87,10 +87,10 @@ public class Interface extends JFrame {
         gbc.gridy = 2;
         painelPrincipal.add(painelCV, gbc);
 
-        JComboBox<String> comboInteresse = new JComboBox<>(new String[]{"Desenvolvedor", "Analista", "Designer"});
+        JComboBox<String> comboInteresse = new JComboBox<>(new String[]{"Desenvolvedor"});
         comboInteresse.setForeground(Color.RED);
 
-        JComboBox<String> comboAtuacao = new JComboBox<>(new String[]{"Programação", "Testes", "Banco de Dados"});
+        JComboBox<String> comboAtuacao = new JComboBox<>(new String[]{"Programação"});
         comboAtuacao.setForeground(Color.BLUE);
 
         JPanel painelAreas = new JPanel(new GridBagLayout());
