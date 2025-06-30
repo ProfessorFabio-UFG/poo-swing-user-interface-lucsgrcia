@@ -4,14 +4,11 @@ import java.awt.*;
 public class Interface extends JFrame {
     public Interface() {
         super("Ficha de Avaliação");
-
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(600, 600);
         setLayout(new BorderLayout());
 
-        // Menu
         JMenuBar menuBar = new JMenuBar();
-
         JMenu menuArquivo = new JMenu("Arquivo");
         JMenu menuEditar = new JMenu("Editar");
 
@@ -30,17 +27,14 @@ public class Interface extends JFrame {
 
         menuBar.add(menuArquivo);
         menuBar.add(menuEditar);
-
         setJMenuBar(menuBar);
 
-        // Painel principal
         JPanel painelPrincipal = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(4, 4, 4, 4);
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.anchor = GridBagConstraints.WEST;
 
-        // Título
         JLabel titulo = new JLabel("Ficha de Avaliação", JLabel.CENTER);
         titulo.setForeground(Color.RED);
         titulo.setFont(new Font("Arial", Font.BOLD, 14));
@@ -49,89 +43,85 @@ public class Interface extends JFrame {
         gbc.gridy = 0;
         painelPrincipal.add(titulo, gbc);
 
-        // Código
-        gbc.gridwidth = 1;
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        painelPrincipal.add(new JLabel("Código:"), gbc);
-        gbc.gridx = 1;
-        painelPrincipal.add(new JTextField(20), gbc);
+        JPanel painelDados = new JPanel(new GridBagLayout());
+        painelDados.setBorder(BorderFactory.createTitledBorder("Dados Pessoais"));
+        GridBagConstraints gbcDados = new GridBagConstraints();
+        gbcDados.insets = new Insets(4, 4, 4, 4);
+        gbcDados.fill = GridBagConstraints.HORIZONTAL;
 
-        // Nome
-        gbc.gridx = 0;
-        gbc.gridy = 2;
-        painelPrincipal.add(new JLabel("Nome:"), gbc);
-        gbc.gridx = 1;
-        painelPrincipal.add(new JTextField(20), gbc);
-
-        // Sexo
-        gbc.gridx = 0;
-        gbc.gridy = 3;
-        painelPrincipal.add(new JLabel("Sexo:"), gbc);
-
-        JPanel painelSexo = new JPanel();
+        JTextField campoCodigo = new JTextField(15);
+        JTextField campoNome = new JTextField(15);
         JRadioButton rbFeminino = new JRadioButton("Feminino");
         JRadioButton rbMasculino = new JRadioButton("Masculino");
         ButtonGroup grupoSexo = new ButtonGroup();
         grupoSexo.add(rbFeminino);
         grupoSexo.add(rbMasculino);
+
+        gbcDados.gridx = 0; gbcDados.gridy = 0;
+        painelDados.add(new JLabel("Código:"), gbcDados);
+        gbcDados.gridx = 1;
+        painelDados.add(campoCodigo, gbcDados);
+
+        gbcDados.gridx = 0; gbcDados.gridy = 1;
+        painelDados.add(new JLabel("Nome:"), gbcDados);
+        gbcDados.gridx = 1;
+        painelDados.add(campoNome, gbcDados);
+
+        gbcDados.gridx = 0; gbcDados.gridy = 2;
+        painelDados.add(new JLabel("Sexo:"), gbcDados);
+        gbcDados.gridx = 1;
+        JPanel painelSexo = new JPanel();
         painelSexo.add(rbFeminino);
         painelSexo.add(rbMasculino);
+        painelDados.add(painelSexo, gbcDados);
 
-        gbc.gridx = 1;
-        painelPrincipal.add(painelSexo, gbc);
+        gbc.gridy = 1;
+        painelPrincipal.add(painelDados, gbc);
 
-        // Curriculum Vitae
-        gbc.gridx = 0;
-        gbc.gridy = 4;
-        gbc.gridwidth = 2;
-        JLabel labelCV = new JLabel("Curriculum Vitae");
-        labelCV.setForeground(Color.BLUE);
-        painelPrincipal.add(labelCV, gbc);
+        JTextArea areaCV = new JTextArea(5, 30);
+        JScrollPane scrollCV = new JScrollPane(areaCV);
+        JPanel painelCV = new JPanel(new BorderLayout());
+        painelCV.setBorder(BorderFactory.createTitledBorder("Curriculum Vitae"));
+        painelCV.add(scrollCV, BorderLayout.CENTER);
 
-        gbc.gridy = 5;
-        gbc.ipady = 60;
-        JTextArea areaTexto = new JTextArea(5, 30);
-        JScrollPane scrollCV = new JScrollPane(areaTexto);
-        painelPrincipal.add(scrollCV, gbc);
-        gbc.ipady = 0;
+        gbc.gridy = 2;
+        painelPrincipal.add(painelCV, gbc);
 
-        // Áreas
-        gbc.gridy = 6;
-        JLabel labelAreas = new JLabel("Áreas");
-        labelAreas.setForeground(Color.BLUE);
-        painelPrincipal.add(labelAreas, gbc);
-
-        // Interesse e Atuação
-        gbc.gridy = 7;
-        gbc.gridwidth = 1;
-        gbc.gridx = 0;
-        painelPrincipal.add(new JLabel("Interesse:"), gbc);
-        gbc.gridx = 1;
-        painelPrincipal.add(new JLabel("Atuação:"), gbc);
-
-        gbc.gridy = 8;
-        gbc.gridx = 0;
-        JComboBox<String> comboInteresse = new JComboBox<>(new String[]{"Desenvolvedor"});
+        JComboBox<String> comboInteresse = new JComboBox<>(new String[]{"Desenvolvedor", "Analista", "Designer"});
         comboInteresse.setForeground(Color.RED);
-        painelPrincipal.add(comboInteresse, gbc);
-        gbc.gridx = 1;
-        JComboBox<String> comboAtuacao = new JComboBox<>(new String[]{"Programação"});
-        painelPrincipal.add(comboAtuacao, gbc);
 
-        // Botões inferiores
+        JComboBox<String> comboAtuacao = new JComboBox<>(new String[]{"Programação", "Testes", "Banco de Dados"});
+        comboAtuacao.setForeground(Color.BLUE);
+
+        JPanel painelAreas = new JPanel(new GridBagLayout());
+        painelAreas.setBorder(BorderFactory.createTitledBorder("Áreas"));
+        GridBagConstraints gbcAreas = new GridBagConstraints();
+        gbcAreas.insets = new Insets(4, 4, 4, 4);
+        gbcAreas.fill = GridBagConstraints.HORIZONTAL;
+
+        gbcAreas.gridx = 0; gbcAreas.gridy = 0;
+        painelAreas.add(new JLabel("Interesse:"), gbcAreas);
+        gbcAreas.gridx = 1;
+        painelAreas.add(comboInteresse, gbcAreas);
+        gbcAreas.gridx = 2;
+        painelAreas.add(new JLabel("Atuação:"), gbcAreas);
+        gbcAreas.gridx = 3;
+        painelAreas.add(comboAtuacao, gbcAreas);
+
+        gbc.gridy = 3;
+        painelPrincipal.add(painelAreas, gbc);
+
         JPanel painelBotoes = new JPanel();
         painelBotoes.setBackground(Color.GREEN);
 
-        String[] botoes = {"Salvar", "Anterior", "Proximo", "Novo", "Cancelar"};
-        for (String texto : botoes) {
-            painelBotoes.add(new JButton(texto));
-        }
+        painelBotoes.add(new JButton("Salvar"));
+        painelBotoes.add(new JButton("Anterior"));
+        painelBotoes.add(new JButton("Proximo"));
+        painelBotoes.add(new JButton("Novo"));
+        painelBotoes.add(new JButton("Cancelar"));
 
         add(painelPrincipal, BorderLayout.CENTER);
         add(painelBotoes, BorderLayout.SOUTH);
-
-
     }
 
     public static void main(String[] args) {
